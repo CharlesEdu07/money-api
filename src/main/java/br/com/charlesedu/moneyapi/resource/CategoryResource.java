@@ -3,6 +3,7 @@ package br.com.charlesedu.moneyapi.resource;
 import java.net.URI;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class CategoryResource {
     }
 
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category category, HttpServletResponse response) {
+    public ResponseEntity<Category> create(@Valid @RequestBody Category category, HttpServletResponse response) {
         Category categorySaved = categoryRepository.save(category);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categorySaved.getId())
