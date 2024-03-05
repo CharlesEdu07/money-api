@@ -10,7 +10,7 @@ public class Address {
     private String neighborhood;
     private String cep;
     private String city;
-    private String state;
+    private String stateAddress;
 
     public String getStreetAddress() {
         return streetAddress;
@@ -60,11 +60,11 @@ public class Address {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
+    public String getStateAddress() {
+        return stateAddress;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStateAddress(String stateAddress) {
+        this.stateAddress = stateAddress;
     }
 }

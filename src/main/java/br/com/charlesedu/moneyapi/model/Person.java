@@ -60,6 +60,14 @@ public class Person {
         this.active = active;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
