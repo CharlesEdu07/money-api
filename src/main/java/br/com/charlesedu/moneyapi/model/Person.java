@@ -1,5 +1,6 @@
 package br.com.charlesedu.moneyapi.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,9 @@ public class Person {
 
     @NotNull
     private boolean active;
+
+    @Embedded
+    private Address address;
 
     public Person() {
     }
