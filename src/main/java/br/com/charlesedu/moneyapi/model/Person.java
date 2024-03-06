@@ -9,6 +9,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Table(name = "person")
 public class Person {
@@ -22,7 +24,7 @@ public class Person {
     private String personName;
 
     @NotNull
-    private boolean active;
+    private Boolean active;
 
     @Embedded
     private Address address;
@@ -30,7 +32,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(long id, String personName, boolean active) {
+    public Person(long id, String personName, Boolean active) {
         this.id = id;
         this.personName = personName;
         this.active = active;
@@ -52,11 +54,11 @@ public class Person {
         this.personName = personName;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
