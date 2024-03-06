@@ -3,6 +3,7 @@ package br.com.charlesedu.moneyapi.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.com.charlesedu.moneyapi.model.Posting;
@@ -19,6 +20,12 @@ public class PostingService {
     }
 
     public Posting findById(Long id) {
-        return postingRepository.findOne(id);
+        Posting postingSaved = postingRepository.findOne(id);
+
+        if (postingSaved == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+
+        return postingSaved;
     }
 }
