@@ -1,22 +1,23 @@
 package br.com.charlesedu.moneyapi.resource;
 
-import java.net.URI;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import br.com.charlesedu.moneyapi.event.ResourceCreatedEvent;
 import br.com.charlesedu.moneyapi.model.Person;
 import br.com.charlesedu.moneyapi.repository.PersonRepository;
 
@@ -26,6 +27,9 @@ public class PersonResource {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
     @GetMapping
     public ResponseEntity<?> list() {
@@ -38,12 +42,9 @@ public class PersonResource {
     public ResponseEntity<Person> create(@Valid @RequestBody Person person, HttpServletResponse response) {
         Person personSaved = personRepository.save(person);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(personSaved.getId())
-                .toUri();
+        publisher.publishEvent(new ResourceCreatedEvent(this, response, personSaved.getId()));
 
-        response.setHeader("Location", uri.toASCIIString());
-
-        return ResponseEntity.created(uri).body(personSaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(personSaved);
     }
 
     @GetMapping("/{id}")
@@ -55,5 +56,11 @@ public class PersonResource {
         } else {
             return ResponseEntity.ok(person);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Long id) {
+        personRepository.delete(id);
     }
 }
