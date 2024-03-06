@@ -1,15 +1,23 @@
 package br.com.charlesedu.moneyapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+
+    @Column(name = "street_address")
     private String streetAddress;
+
+    @Column(name = "number_address")
     private String numberAddress;
+
     private String complement;
     private String neighborhood;
     private String cep;
     private String city;
+
+    @Column(name = "state_address")
     private String stateAddress;
 
     public String getStreetAddress() {

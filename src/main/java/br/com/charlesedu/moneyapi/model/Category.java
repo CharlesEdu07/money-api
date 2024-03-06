@@ -1,5 +1,6 @@
 package br.com.charlesedu.moneyapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Category {
 
     @NotNull
     @Size(min = 3, max = 30)
+    @Column(name = "category_name")
     private String categoryName;
 
     public Category() {

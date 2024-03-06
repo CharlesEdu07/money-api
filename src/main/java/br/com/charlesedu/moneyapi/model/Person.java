@@ -1,5 +1,6 @@
 package br.com.charlesedu.moneyapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Person {
 
     @NotNull
     @Size(min = 3, max = 255)
+    @Column(name = "person_name")
     private String personName;
 
     @NotNull
