@@ -14,8 +14,18 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    public Person findById(Long id) {
+        Person personSaved = personRepository.findOne(id);
+
+        if (personSaved == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+
+        return personSaved;
+    }
+
     public Person update(Long id, Person person) {
-        Person personSaved = findPersonById(id);
+        Person personSaved = findById(id);
 
         BeanUtils.copyProperties(person, personSaved, "id");
 
@@ -25,20 +35,10 @@ public class PersonService {
     }
 
     public void updatePropertyActive(Long id, Boolean active) {
-        Person personSaved = findPersonById(id);
+        Person personSaved = findById(id);
 
         personSaved.setActive(active);
 
         personRepository.save(personSaved);
-    }
-
-    private Person findPersonById(Long id) {
-        Person personSaved = personRepository.findOne(id);
-
-        if (personSaved == null) {
-            throw new EmptyResultDataAccessException(1);
-        }
-
-        return personSaved;
     }
 }

@@ -36,13 +36,6 @@ public class PersonResource {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    @GetMapping
-    public ResponseEntity<?> list() {
-        List<Person> persons = personRepository.findAll();
-
-        return ResponseEntity.ok(persons);
-    }
-
     @PostMapping
     public ResponseEntity<Person> create(@Valid @RequestBody Person person, HttpServletResponse response) {
         Person personSaved = personRepository.save(person);
@@ -52,21 +45,18 @@ public class PersonResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(personSaved);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
-        Person person = personRepository.findOne(id);
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        List<Person> persons = personRepository.findAll();
 
-        if (person == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Person not found");
-        } else {
-            return ResponseEntity.ok(person);
-        }
+        return ResponseEntity.ok(persons);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Long id) {
-        personRepository.delete(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+        Person person = personService.findById(id);
+
+        return ResponseEntity.ok(person);
     }
 
     @PutMapping("/{id}")
@@ -80,5 +70,11 @@ public class PersonResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePropertyActive(@PathVariable Long id, @RequestBody Boolean active) {
         personService.updatePropertyActive(id, active);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Long id) {
+        personRepository.delete(id);
     }
 }
