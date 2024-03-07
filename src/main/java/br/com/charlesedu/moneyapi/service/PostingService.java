@@ -15,6 +15,10 @@ public class PostingService {
     @Autowired
     private PostingRepository postingRepository;
 
+    public Posting save(Posting posting) {
+        return postingRepository.save(posting);
+    }
+
     public List<Posting> findAll() {
         return postingRepository.findAll();
     }
