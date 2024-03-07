@@ -29,20 +29,20 @@ public class CategoryResource {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    @GetMapping
-    public ResponseEntity<?> list() {
-        List<Category> categories = categoryRepository.findAll();
-
-        return ResponseEntity.ok(categories);
-    }
-
     @PostMapping
-    public ResponseEntity<Category> create(@Valid @RequestBody Category category, HttpServletResponse response) {
+    public ResponseEntity<Category> save(@Valid @RequestBody Category category, HttpServletResponse response) {
         Category categorySaved = categoryRepository.save(category);
 
         publisher.publishEvent(new ResourceCreatedEvent(this, response, categorySaved.getId()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(categorySaved);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        List<Category> categories = categoryRepository.findAll();
+
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")

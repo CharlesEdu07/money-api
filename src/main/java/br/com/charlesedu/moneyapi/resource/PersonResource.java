@@ -37,7 +37,7 @@ public class PersonResource {
     private ApplicationEventPublisher publisher;
 
     @PostMapping
-    public ResponseEntity<Person> create(@Valid @RequestBody Person person, HttpServletResponse response) {
+    public ResponseEntity<Person> save(@Valid @RequestBody Person person, HttpServletResponse response) {
         Person personSaved = personRepository.save(person);
 
         publisher.publishEvent(new ResourceCreatedEvent(this, response, personSaved.getId()));
