@@ -44,4 +44,8 @@ public class PostingService {
 
         return postingSaved;
     }
+
+    public void delete(Long id) {
+        postingRepository.delete(id);
+    }
 }
