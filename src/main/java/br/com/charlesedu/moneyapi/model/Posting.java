@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import br.com.charlesedu.moneyapi.model.enums.PostingType;
 
@@ -24,27 +25,33 @@ public class Posting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "posting_description")
     private String postingDescription;
 
+    @NotNull
     @Column(name = "due_date")
     private LocalDate dueDate;
 
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 
+    @NotNull
     @Column(name = "posting_value")
     private BigDecimal postingValue;
 
     private String note;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PostingType postingType;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
