@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.charlesedu.moneyapi.event.ResourceCreatedEvent;
 import br.com.charlesedu.moneyapi.model.Posting;
+import br.com.charlesedu.moneyapi.repository.filter.PostingFilter;
 import br.com.charlesedu.moneyapi.service.PostingService;
 
 @RestController
@@ -38,10 +39,10 @@ public class PostingResource {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(postingSaved);
     }
-
+    
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        List<Posting> postings = postingService.findAll();
+    public ResponseEntity<?> find(PostingFilter postingFilter) {
+        List<Posting> postings = postingService.find(postingFilter);
 
         return ResponseEntity.ok(postings);
     }

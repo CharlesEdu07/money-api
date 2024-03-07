@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.charlesedu.moneyapi.model.Person;
 import br.com.charlesedu.moneyapi.model.Posting;
 import br.com.charlesedu.moneyapi.repository.PostingRepository;
+import br.com.charlesedu.moneyapi.repository.filter.PostingFilter;
 import br.com.charlesedu.moneyapi.service.exception.InactiveOrNonExistentPersonException;
 
 @Service
@@ -30,8 +31,8 @@ public class PostingService {
         return postingRepository.save(posting);
     }
 
-    public List<Posting> findAll() {
-        return postingRepository.findAll();
+    public List<Posting> find(PostingFilter postingFilter) {
+        return postingRepository.filter(postingFilter);
     }
 
     public Posting findById(Long id) {
