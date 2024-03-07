@@ -24,6 +24,12 @@ public class PersonService {
         return personSaved;
     }
 
+    public Person findPersonPostingById(Long id) {
+        Person personSaved = personRepository.findOne(id);
+
+        return personSaved;
+    }
+
     public Person update(Long id, Person person) {
         Person personSaved = findById(id);
 

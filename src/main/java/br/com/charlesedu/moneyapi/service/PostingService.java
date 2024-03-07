@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import br.com.charlesedu.moneyapi.model.Person;
 import br.com.charlesedu.moneyapi.model.Posting;
 import br.com.charlesedu.moneyapi.repository.PostingRepository;
+import br.com.charlesedu.moneyapi.service.exception.InactiveOrNonExistentPersonException;
 
 @Service
 public class PostingService {
@@ -15,7 +17,16 @@ public class PostingService {
     @Autowired
     private PostingRepository postingRepository;
 
+    @Autowired
+    private PersonService personService;
+
     public Posting save(Posting posting) {
+        Person person = personService.findPersonPostingById(posting.getPerson().getId());
+
+        if (person == null || person.isInactive()) {
+            throw new InactiveOrNonExistentPersonException();
+        }
+
         return postingRepository.save(posting);
     }
 
