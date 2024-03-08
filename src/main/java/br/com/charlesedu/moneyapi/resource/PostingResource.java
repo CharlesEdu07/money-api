@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,10 +45,10 @@ public class PostingResource {
     }
 
     @GetMapping
-    public ResponseEntity<?> find(PostingFilter postingFilter) {
-        List<Posting> postings = postingService.find(postingFilter);
+    public Page<Posting> find(PostingFilter postingFilter, Pageable pageable) {
+        Page<Posting> postings = postingService.find(postingFilter, pageable);
 
-        return ResponseEntity.ok(postings);
+        return postings;
     }
 
     @GetMapping("/{id}")

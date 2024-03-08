@@ -1,9 +1,9 @@
 package br.com.charlesedu.moneyapi.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.charlesedu.moneyapi.model.Person;
@@ -31,8 +31,8 @@ public class PostingService {
         return postingRepository.save(posting);
     }
 
-    public List<Posting> find(PostingFilter postingFilter) {
-        return postingRepository.filter(postingFilter);
+    public Page<Posting> find(PostingFilter postingFilter, Pageable pageable) {
+        return postingRepository.filter(postingFilter, pageable);
     }
 
     public Posting findById(Long id) {
