@@ -16,9 +16,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
+import br.com.charlesedu.moneyapi.model.Category_;
+import br.com.charlesedu.moneyapi.model.Person_;
 import br.com.charlesedu.moneyapi.model.Posting;
 import br.com.charlesedu.moneyapi.model.Posting_;
 import br.com.charlesedu.moneyapi.repository.filter.PostingFilter;
+import br.com.charlesedu.moneyapi.repository.projection.PostingProjection;
 
 public class PostingRepositoryImpl implements PostingRepositoryQuery {
 
@@ -45,6 +48,31 @@ public class PostingRepositoryImpl implements PostingRepositoryQuery {
         return new PageImpl<>(query.getResultList(), pageable, total(postingFilter));
     }
 
+    @Override
+    public Page<PostingProjection> projection(PostingFilter postingFilter, Pageable pageable) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<PostingProjection> criteria = builder.createQuery(PostingProjection.class);
+
+        Root<Posting> root = criteria.from(Posting.class);
+
+        criteria.select(
+                builder.construct(PostingProjection.class, root.get(Posting_.id), root.get(Posting_.postingDescription),
+                        root.get(Posting_.dueDate), root.get(Posting_.paymentDate), root.get(Posting_.postingValue),
+                        root.get(Posting_.postingType), root.get(Posting_.category).get(Category_.categoryName),
+                        root.get(Posting_.person).get(Person_.personName)));
+
+        Predicate[] predicates = createRestrictions(postingFilter, builder, root);
+
+        criteria.where(predicates);
+
+        TypedQuery<PostingProjection> query = manager.createQuery(criteria);
+
+        addPaginationRestrictions(query, pageable);
+
+        return new PageImpl<>(query.getResultList(), pageable, total(postingFilter));
+    }
+
     private Predicate[] createRestrictions(PostingFilter postingFilter, CriteriaBuilder builder, Root<Posting> root) {
         List<Predicate> predicates = new ArrayList<>();
 
@@ -64,7 +92,7 @@ public class PostingRepositoryImpl implements PostingRepositoryQuery {
         return predicates.toArray(new Predicate[predicates.size()]);
     }
 
-    private void addPaginationRestrictions(TypedQuery<Posting> query, Pageable pageable) {
+    private void addPaginationRestrictions(TypedQuery<?> query, Pageable pageable) {
         int currentPage = pageable.getPageNumber();
         int totalRecordsPerPage = pageable.getPageSize();
         int firstRecordOfPage = currentPage * totalRecordsPerPage;
@@ -83,7 +111,6 @@ public class PostingRepositoryImpl implements PostingRepositoryQuery {
         Predicate[] predicates = createRestrictions(postingFilter, builder, root);
 
         criteria.where(predicates);
-
         criteria.select(builder.count(root));
 
         return manager.createQuery(criteria).getSingleResult();

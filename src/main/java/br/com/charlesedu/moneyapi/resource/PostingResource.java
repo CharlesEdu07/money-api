@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.charlesedu.moneyapi.event.ResourceCreatedEvent;
 import br.com.charlesedu.moneyapi.model.Posting;
 import br.com.charlesedu.moneyapi.repository.filter.PostingFilter;
+import br.com.charlesedu.moneyapi.repository.projection.PostingProjection;
 import br.com.charlesedu.moneyapi.service.PostingService;
 
 @RestController
@@ -48,6 +49,14 @@ public class PostingResource {
     @PreAuthorize("hasAuthority('ROLE_VIEW_POSTING') and #oauth2.hasScope('read')")
     public Page<Posting> find(PostingFilter postingFilter, Pageable pageable) {
         Page<Posting> postings = postingService.find(postingFilter, pageable);
+
+        return postings;
+    }
+
+    @GetMapping(params = "projection")
+    @PreAuthorize("hasAuthority('ROLE_VIEW_POSTING') and #oauth2.hasScope('read')")
+    public Page<PostingProjection> projection(PostingFilter postingFilter, Pageable pageable) {
+        Page<PostingProjection> postings = postingService.projection(postingFilter, pageable);
 
         return postings;
     }

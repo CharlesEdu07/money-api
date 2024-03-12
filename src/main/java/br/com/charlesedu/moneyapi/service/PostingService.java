@@ -10,6 +10,7 @@ import br.com.charlesedu.moneyapi.model.Person;
 import br.com.charlesedu.moneyapi.model.Posting;
 import br.com.charlesedu.moneyapi.repository.PostingRepository;
 import br.com.charlesedu.moneyapi.repository.filter.PostingFilter;
+import br.com.charlesedu.moneyapi.repository.projection.PostingProjection;
 import br.com.charlesedu.moneyapi.service.exception.InactiveOrNonExistentPersonException;
 
 @Service
@@ -33,6 +34,10 @@ public class PostingService {
 
     public Page<Posting> find(PostingFilter postingFilter, Pageable pageable) {
         return postingRepository.filter(postingFilter, pageable);
+    }
+
+    public Page<PostingProjection> projection(PostingFilter postingFilter, Pageable pageable) {
+        return postingRepository.projection(postingFilter, pageable);
     }
 
     public Posting findById(Long id) {
