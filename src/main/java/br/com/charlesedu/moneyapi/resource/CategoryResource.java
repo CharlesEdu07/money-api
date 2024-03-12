@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ public class CategoryResource {
     private ApplicationEventPublisher publisher;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_CATEGORY')")
     public ResponseEntity<Category> save(@Valid @RequestBody Category category, HttpServletResponse response) {
         Category categorySaved = categoryRepository.save(category);
 
@@ -39,6 +41,7 @@ public class CategoryResource {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_VIEW_CATEGORY')")
     public ResponseEntity<?> findAll() {
         List<Category> categories = categoryRepository.findAll();
 
@@ -46,6 +49,7 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_VIEW_CATEGORY')")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         Category category = categoryRepository.findOne(id);
 
