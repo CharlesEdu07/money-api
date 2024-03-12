@@ -31,7 +31,7 @@ public class CategoryResource {
     private ApplicationEventPublisher publisher;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_REGISTER_CATEGORY')")
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_CATEGORY') and #oauth2.hasScope('write')")
     public ResponseEntity<Category> save(@Valid @RequestBody Category category, HttpServletResponse response) {
         Category categorySaved = categoryRepository.save(category);
 
@@ -41,7 +41,7 @@ public class CategoryResource {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_VIEW_CATEGORY')")
+    @PreAuthorize("hasAuthority('ROLE_VIEW_CATEGORY') and #oauth2.hasScope('read')")
     public ResponseEntity<?> findAll() {
         List<Category> categories = categoryRepository.findAll();
 
@@ -49,7 +49,7 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_VIEW_CATEGORY')")
+    @PreAuthorize("hasAuthority('ROLE_VIEW_CATEGORY') and #oauth2.hasScope('read')")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         Category category = categoryRepository.findOne(id);
 
