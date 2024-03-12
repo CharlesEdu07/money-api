@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class PostingResource {
     private ApplicationEventPublisher publisher;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_POSTING') and #oauth2.hasScope('write')")
     public ResponseEntity<Posting> save(@Valid @RequestBody Posting posting, HttpServletResponse response) {
         Posting postingSaved = postingService.save(posting);
 
@@ -43,6 +45,7 @@ public class PostingResource {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_VIEW_POSTING') and #oauth2.hasScope('read')")
     public Page<Posting> find(PostingFilter postingFilter, Pageable pageable) {
         Page<Posting> postings = postingService.find(postingFilter, pageable);
 
@@ -50,6 +53,7 @@ public class PostingResource {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_VIEW_POSTING') and #oauth2.hasScope('read')")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         Posting posting = postingService.findById(id);
 
@@ -58,6 +62,7 @@ public class PostingResource {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ROLE_DELETE_POSTING') and #oauth2.hasScope('write')")
     public void delete(@PathVariable Long id) {
         postingService.delete(id);
     }

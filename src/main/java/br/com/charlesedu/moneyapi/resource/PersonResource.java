@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class PersonResource {
     private ApplicationEventPublisher publisher;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_REGISTER_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Person> save(@Valid @RequestBody Person person, HttpServletResponse response) {
         Person personSaved = personRepository.save(person);
 
@@ -46,6 +48,7 @@ public class PersonResource {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_VIEW_PERSON') and #oauth2.hasScope('read')")
     public ResponseEntity<?> findAll() {
         List<Person> persons = personRepository.findAll();
 
@@ -53,6 +56,7 @@ public class PersonResource {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_VIEW_PERSON') and #oauth2.hasScope('read')")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         Person person = personService.findById(id);
 
@@ -60,6 +64,7 @@ public class PersonResource {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public ResponseEntity<Person> update(@PathVariable Long id, @Valid @RequestBody Person person) {
         Person personSaved = personService.update(id, person);
 
@@ -68,12 +73,14 @@ public class PersonResource {
 
     @PutMapping("/{id}/active")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ROLE_UPDATE_PERSON') and #oauth2.hasScope('write')")
     public void updatePropertyActive(@PathVariable Long id, @RequestBody Boolean active) {
         personService.updatePropertyActive(id, active);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ROLE_DELETE_PERSON') and #oauth2.hasScope('write')")
     public void delete(@PathVariable("id") Long id) {
         personRepository.delete(id);
     }
