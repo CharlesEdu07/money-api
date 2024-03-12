@@ -52,7 +52,6 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
     }
 
     static class MyServletRequestWrapper extends HttpServletRequestWrapper {
-
         private String refreshToken;
 
         public MyServletRequestWrapper(HttpServletRequest request, String refreshToken) {
