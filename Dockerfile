@@ -11,6 +11,6 @@ FROM openjdk:8-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /target/moneyapi-1.0.0-SNAPSHOT.jar /money-api.jar
+COPY --from=build /target/money-api-1.0.0-SNAPSHOT.jar /money-api.jar
 
 ENTRYPOINT [ "java", "-jar", "/money-api.jar" ]
