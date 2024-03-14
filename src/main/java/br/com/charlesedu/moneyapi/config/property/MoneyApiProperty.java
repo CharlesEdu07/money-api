@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class MoneyApiProperty {
     private final Security security = new Security();
 
-    private String permittedOrigin = "http://localhost:8000";
+    private String permittedOrigin = "http://localhost:8080";
 
     public Security getSecurity() {
         return security;
