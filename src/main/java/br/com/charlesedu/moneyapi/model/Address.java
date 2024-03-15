@@ -5,35 +5,36 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+    private String street;
 
-    @Column(name = "street_address")
-    private String streetAddress;
-
-    @Column(name = "number_address")
-    private String numberAddress;
+    @Column(name = "address_number")
+    private String addressNumber;
 
     private String complement;
-    private String neighborhood;
-    private String cep;
+    private String district;
+
+    @Column(name = "zip_code")
+    private String zipCode;
+
     private String city;
 
-    @Column(name = "state_address")
-    private String stateAddress;
+    @Column(name = "address_state")
+    private String addressState;
 
-    public String getStreetAddress() {
-        return streetAddress;
+    public String getStreet() {
+        return street;
     }
 
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public String getNumberAddress() {
-        return numberAddress;
+    public String getAddressNumber() {
+        return addressNumber;
     }
 
-    public void setNumberAddress(String numberAddress) {
-        this.numberAddress = numberAddress;
+    public void setAddressNumber(String addressNumber) {
+        this.addressNumber = addressNumber;
     }
 
     public String getComplement() {
@@ -44,20 +45,20 @@ public class Address {
         this.complement = complement;
     }
 
-    public String getNeighborhood() {
-        return neighborhood;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
-    public String getCep() {
-        return cep;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getCity() {
@@ -68,11 +69,11 @@ public class Address {
         this.city = city;
     }
 
-    public String getStateAddress() {
-        return stateAddress;
+    public String getAddressState() {
+        return addressState;
     }
 
-    public void setStateAddress(String stateAddress) {
-        this.stateAddress = stateAddress;
+    public void setAddressState(String addressState) {
+        this.addressState = addressState;
     }
 }
