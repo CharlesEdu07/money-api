@@ -24,5 +24,4 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 
         return accessToken;
     }
-    
 }
