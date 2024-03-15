@@ -3,6 +3,8 @@ package br.com.charlesedu.moneyapi.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.charlesedu.moneyapi.model.Person;
@@ -20,6 +22,12 @@ public class PersonService {
         if (personSaved == null) {
             throw new EmptyResultDataAccessException(1);
         }
+
+        return personSaved;
+    }
+
+    public Page<Person> find(String personName, Pageable pageable) {
+        Page<Person> personSaved = personRepository.findByPersonNameContaining(personName, pageable);
 
         return personSaved;
     }
