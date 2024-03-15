@@ -31,7 +31,7 @@ VALUES
         '10',
         null,
         'Brasil',
-        '38.400-12',
+        '38.400-121',
         'Uberlândia',
         'MG'
     );
@@ -56,7 +56,7 @@ VALUES
         '110',
         'Apto 101',
         'Colina',
-        '11.400-12',
+        '11.400-121',
         'Ribeirão Preto',
         'SP'
     );
@@ -81,7 +81,7 @@ VALUES
         '23',
         null,
         'Morumbi',
-        '54.212-12',
+        '54.212-121',
         'Goiânia',
         'GO'
     );
@@ -106,7 +106,7 @@ VALUES
         '123',
         'Apto 302',
         'Aparecida',
-        '38.400-12',
+        '38.400-121',
         'Salvador',
         'BA'
     );
@@ -131,7 +131,7 @@ VALUES
         '321',
         null,
         'Jardins',
-        '56.400-12',
+        '56.400-121',
         'Natal',
         'RN'
     );
@@ -156,7 +156,7 @@ VALUES
         '100',
         null,
         'Tubalina',
-        '77.400-12',
+        '77.400-121',
         'Porto Alegre',
         'RS'
     );
@@ -181,7 +181,7 @@ VALUES
         '1120',
         'Apto 201',
         'Centro',
-        '12.400-12',
+        '12.400-121',
         'Rio de Janeiro',
         'RJ'
     );
@@ -206,7 +206,7 @@ VALUES
         '433',
         null,
         'Centro',
-        '31.400-12',
+        '31.400-121',
         'Belo Horizonte',
         'MG'
     );
@@ -231,7 +231,7 @@ VALUES
         '566',
         null,
         'Segismundo Pereira',
-        '38.400-00',
+        '38.400-001',
         'Uberlândia',
         'MG'
     );
@@ -256,7 +256,7 @@ VALUES
         '1233',
         'Apto 10',
         'Vigilato',
-        '99.400-12',
+        '99.400-121',
         'Manaus',
         'AM'
     );
