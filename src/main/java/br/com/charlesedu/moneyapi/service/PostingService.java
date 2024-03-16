@@ -1,5 +1,6 @@
 package br.com.charlesedu.moneyapi.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,24 @@ public class PostingService {
         if (postingSaved == null) {
             throw new EmptyResultDataAccessException(1);
         }
+
+        return postingSaved;
+    }
+
+    public Posting update(Long id, Posting posting) {
+        Posting postingSaved = postingRepository.findOne(id);
+
+        if (postingSaved == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (!posting.getPerson().equals(postingSaved.getPerson())) {
+            personService.validatePerson(posting.getPerson().getId());
+        }
+
+        BeanUtils.copyProperties(posting, postingSaved, "id");
+
+        postingRepository.save(postingSaved);
 
         return postingSaved;
     }

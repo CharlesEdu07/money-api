@@ -2,13 +2,13 @@ package br.com.charlesedu.moneyapi.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.charlesedu.moneyapi.model.Person;
 import br.com.charlesedu.moneyapi.repository.PersonRepository;
+import br.com.charlesedu.moneyapi.service.exception.InactiveOrNonExistentPersonException;
 
 @Service
 public class PersonService {
@@ -20,7 +20,7 @@ public class PersonService {
         Person personSaved = personRepository.findOne(id);
 
         if (personSaved == null) {
-            throw new EmptyResultDataAccessException(1);
+            throw new IllegalArgumentException();
         }
 
         return personSaved;
@@ -54,5 +54,17 @@ public class PersonService {
         personSaved.setActive(active);
 
         personRepository.save(personSaved);
+    }
+
+    public void validatePerson(Long id) {
+        Person personSaved = null;
+
+        if (id != null) {
+            personSaved = personRepository.findOne(id);
+        }
+
+        if (personSaved == null || personSaved.isInactive()) {
+            throw new InactiveOrNonExistentPersonException();
+        }
     }
 }
