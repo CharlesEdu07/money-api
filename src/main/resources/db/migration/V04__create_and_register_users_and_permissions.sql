@@ -30,13 +30,13 @@ VALUES
         1,
         'admin',
         'admin@moneyapi.com',
-        '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.'
+        '$2a$12$NA67LPpXTFA5ecBlmEUbAODZMzdkKUMNAykVpko/y94PYQccu7.ma'
     ),
     (
         2,
         'hally',
         'hally@moneyapi.com',
-        '$2a$10$Zc3w6HyuPOPXamaMhh.PQOXvDnEsadztbfi6/RyZWJDzimE8WQjaq'
+        '$2a$12$NA67LPpXTFA5ecBlmEUbAODZMzdkKUMNAykVpko/y94PYQccu7.ma'
     );
 
 INSERT INTO
