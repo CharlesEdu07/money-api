@@ -9,5 +9,5 @@ import br.com.charlesedu.moneyapi.model.Person;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
-    public Page<Person> findByPersonNameContaining(String personName, Pageable pageable);
+    Page<Person> findByPersonNameContainingOrderByIdAsc(String personName, Pageable pageable);
 }

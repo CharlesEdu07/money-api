@@ -27,7 +27,7 @@ public class PersonService {
     }
 
     public Page<Person> find(String personName, Pageable pageable) {
-        Page<Person> personSaved = personRepository.findByPersonNameContaining(personName, pageable);
+        Page<Person> personSaved = personRepository.findByPersonNameContainingOrderByIdAsc(personName, pageable);
 
         return personSaved;
     }
